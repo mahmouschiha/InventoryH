@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="InventoryHub inventory management dashboard">
+  <title>InventoryHub | Stock Control</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">IH</span><span>Inventory<span class="brand-light">Hub</span></span></div>
+      <p class="nav-label">WORKSPACE</p>
+      <a class="nav-item active" href="#"><span>▦</span> Overview</a>
+      <a class="nav-item" href="#inventory"><span>▤</span> Inventory</a>
+      <div class="sidebar-bottom"><div class="avatar">MC</div><div><strong>Workspace Admin</strong><small>Inventory manager</small></div></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><p class="eyebrow">WORKSPACE / OVERVIEW</p><h1>Inventory overview</h1></div><div class="top-actions"><span class="status-dot"></span><span>API connected</span><button id="refreshBtn" class="icon-btn" aria-label="Refresh inventory">↻</button></div></header>
+      <section class="welcome"><div><p class="eyebrow light">MONITOR YOUR OPERATIONS</p><h2>Stock, simplified.</h2><p>Track products, spot low stock, and keep your inventory moving.</p></div><div class="welcome-art" aria-hidden="true"><div class="cube cube-one"></div><div class="cube cube-two"></div><div class="cube cube-three"></div></div></section>
+      <section class="stats" aria-label="Inventory statistics">
+        <article class="stat-card"><span class="stat-icon purple">▦</span><p>Total products</p><strong id="totalProducts">—</strong><small>Products in inventory</small></article>
+        <article class="stat-card"><span class="stat-icon blue">$</span><p>Total stock value</p><strong id="stockValue">—</strong><small>Based on quantity × price</small></article>
+        <article class="stat-card"><span class="stat-icon orange">!</span><p>Low stock items</p><strong id="lowStockCount">—</strong><small>8 units or fewer</small></article>
+      </section>
+      <section class="inventory-panel" id="inventory">
+        <div class="panel-heading"><div><h2>Product inventory</h2><p>Manage your products and stock levels.</p></div><button id="addBtn" class="primary-btn">＋ Add product</button></div>
+        <div class="toolbar"><label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search name, SKU, category…" aria-label="Search products"></label><label class="filter-label"><input type="checkbox" id="lowStockFilter"> Low stock only</label></div>
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+        <div class="table-wrap"><table><thead><tr><th>PRODUCT</th><th>SKU</th><th>CATEGORY</th><th>QUANTITY</th><th>UNIT PRICE</th><th>STOCK VALUE</th><th>ACTION</th></tr></thead><tbody id="inventoryBody"><tr><td colspan="7" class="empty">Loading inventory…</td></tr></tbody></table></div>
+        <div class="panel-footer"><span id="resultCount">Loading products…</span><span>InventoryHub · Demo workspace</span></div>
+      </section>
+      <footer>Built as a full-stack learning project · REST API · JSON responses</footer>
+    </main>
+  </div>
+  <dialog id="productDialog">
+    <form id="productForm" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">PRODUCT DETAILS</p><h2 id="dialogTitle">Add product</h2></div><button type="button" id="closeDialog" class="icon-btn" aria-label="Close dialog">×</button></div>
+      <input type="hidden" id="productId">
+      <label>Product name<input id="name" required maxlength="100" placeholder="e.g. Wireless mouse"></label>
+      <label>SKU<input id="sku" required maxlength="40" placeholder="e.g. ACC-004"></label>
+      <div class="form-row"><label>Quantity<input id="quantity" type="number" min="0" step="1" required value="0"></label><label>Unit price (DT)<input id="price" type="number" min="0" step="0.01" required value="0"></label></div>
+      <label>Category<input id="category" required maxlength="60" placeholder="e.g. Accessories"></label>
+      <p id="formError" class="form-error"></p>
+      <div class="dialog-actions"><button type="button" id="cancelBtn" class="secondary-btn">Cancel</button><button class="primary-btn" type="submit">Save product</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
